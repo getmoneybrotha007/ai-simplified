@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join AI Simplified — Sign Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0f1f3d;
+  --navy-mid:#1a3560;
+  --navy-light:#2a4a7f;
+  --sky:#e8f0fd;
+  --white:#ffffff;
+  --off:#f7f8fc;
+  --ink:#111827;
+  --muted:#6b7280;
+  --border:#e2e8f0;
+  --gold:#c9a84c;
+  --gold-soft:#fdf6e3;
+  --green:#16a34a;
+  --green-soft:#dcfce7;
+  --red:#dc2626;
+  --red-soft:#fee2e2;
+}
+html{font-size:16px;height:100%;}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--off);color:var(--ink);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+
+/* SPLIT LAYOUT */
+.page-split{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:100vh;
+  flex:1;
+}
+
+/* LEFT PANEL */
+.left-panel{
+  background:var(--navy);
+  padding:48px;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+}
+.left-panel::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+.left-panel::after{
+  content:'';position:absolute;
+  width:500px;height:500px;
+  background:radial-gradient(ellipse,rgba(201,168,76,0.08) 0%,transparent 70%);
+  bottom:-100px;right:-100px;pointer-events:none;
+}
+.panel-logo{
+  font-family:'Instrument Serif',serif;font-size:1.35rem;
+  color:white;text-decoration:none;letter-spacing:-0.01em;
+  position:relative;z-index:1;margin-bottom:auto;
+}
+.panel-logo sup{
+  font-family:'Outfit',sans-serif;font-size:0.5rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);
+  vertical-align:super;margin-left:3px;
+}
+.panel-content{
+  position:relative;z-index:1;
+  padding:48px 0 0;
+}
+.panel-eyebrow{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:16px;
+}
+.panel-title{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(2rem,4vw,3rem);font-weight:400;
+  color:white;letter-spacing:-0.025em;line-height:1.1;
+  margin-bottom:16px;
+}
+.panel-title em{font-style:italic;}
+.panel-sub{
+  font-size:0.95rem;color:rgba(255,255,255,0.45);
+  font-weight:300;line-height:1.8;margin-bottom:40px;
+  max-width:380px;
+}
+
+/* FEATURE LIST */
+.feature-list{display:flex;flex-direction:column;gap:16px;margin-bottom:48px;}
+.feature-item{
+  display:flex;align-items:flex-start;gap:14px;
+}
+.feature-icon{
+  width:36px;height:36px;border-radius:9px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+}
+.feature-text{}
+.feature-title{font-size:0.9rem;font-weight:600;color:white;margin-bottom:2px;}
+.feature-desc{font-size:0.8rem;color:rgba(255,255,255,0.35);font-weight:300;line-height:1.5;}
+
+/* FOUNDING PROMO */
+.founding-promo{
+  background:rgba(201,168,76,0.12);
+  border:1px solid rgba(201,168,76,0.25);
+  border-radius:12px;padding:18px 20px;
+  position:relative;z-index:1;
+}
+.fp-label{
+  font-size:0.68rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px;
+}
+.fp-title{
+  font-size:0.95rem;font-weight:600;color:white;margin-bottom:4px;
+}
+.fp-sub{font-size:0.8rem;color:rgba(255,255,255,0.4);font-weight:300;line-height:1.5;}
+.fp-progress{margin-top:12px;}
+.fp-bar{height:4px;background:rgba(255,255,255,0.1);border-radius:100px;overflow:hidden;margin-bottom:5px;}
+.fp-fill{width:53%;height:100%;background:var(--gold);border-radius:100px;}
+.fp-count{font-size:0.72rem;color:rgba(255,255,255,0.3);}
+.fp-count strong{color:var(--gold);}
+
+/* TESTIMONIAL */
+.panel-testimonial{
+  margin-top:auto;padding-top:40px;
+  position:relative;z-index:1;
+}
+.testimonial-text{
+  font-family:'Instrument Serif',serif;font-size:1.05rem;
+  color:rgba(255,255,255,0.6);font-style:italic;
+  line-height:1.7;margin-bottom:14px;
+}
+.testimonial-author{
+  display:flex;align-items:center;gap:10px;
+}
+.t-avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:0.9rem;color:white;
+}
+.t-name{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.6);}
+.t-role{font-size:0.73rem;color:rgba(255,255,255,0.3);font-weight:300;}
+
+/* RIGHT PANEL */
+.right-panel{
+  background:white;padding:48px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.form-wrap{width:100%;max-width:400px;}
+
+/* TAB SWITCHER */
+.auth-tabs{
+  display:flex;background:var(--off);border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;margin-bottom:32px;
+}
+.auth-tab{
+  flex:1;padding:11px;text-align:center;
+  font-size:0.88rem;font-weight:600;color:var(--muted);
+  cursor:pointer;border:none;background:none;
+  font-family:'Outfit',sans-serif;transition:all 0.2s;
+}
+.auth-tab.active{
+  background:var(--navy);color:white;
+  border-radius:8px;margin:3px;
+}
+
+/* FORM HEADER */
+.form-header{margin-bottom:28px;}
+.form-title{
+  font-family:'Instrument Serif',serif;font-size:1.8rem;
+  font-weight:400;color:var(--navy);letter-spacing:-0.02em;
+  margin-bottom:6px;
+}
+.form-sub{font-size:0.88rem;color:var(--muted);font-weight:300;line-height:1.6;}
+
+/* SOCIAL LOGIN */
+.social-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.social-btn{
+  width:100%;padding:12px 16px;
+  border:1.5px solid var(--border);border-radius:10px;
+  background:white;font-family:'Outfit',sans-serif;
+  font-size:0.9rem;font-weight:500;color:var(--ink);
+  cursor:pointer;transition:all 0.2s;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.social-btn:hover{border-color:var(--navy);background:var(--off);}
+.social-icon{font-size:1.1rem;}
+
+/* DIVIDER */
+.divider{
+  display:flex;align-items:center;gap:12px;margin-bottom:24px;
+}
+.divider-line{flex:1;height:1px;background:var(--border);}
+.divider-text{font-size:0.78rem;color:var(--muted);font-weight:400;white-space:nowrap;}
+
+/* FORM */
+.form-group{margin-bottom:16px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.form-label{
+  display:block;font-size:0.78rem;font-weight:600;
+  color:var(--ink);margin-bottom:6px;letter-spacing:0.02em;
+}
+.form-input{
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--border);border-radius:9px;
+  font-size:0.9rem;font-family:'Outfit',sans-serif;
+  color:var(--ink);outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+  background:white;
+}
+.form-input:focus{
+  border-color:var(--navy);
+  box-shadow:0 0 0 3px rgba(15,31,61,0.06);
+}
+.form-input::placeholder{color:#9ca3af;}
+.form-input.error{border-color:var(--red);}
+
+.input-wrap{position:relative;}
+.input-wrap .form-input{padding-right:44px;}
+.eye-btn{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;
+  font-size:0.9rem;color:var(--muted);padding:4px;
+  transition:color 0.2s;
+}
+.eye-btn:hover{color:var(--ink);}
+
+.field-error{
+  font-size:0.75rem;color:var(--red);margin-top:5px;
+  display:none;
+}
+.field-error.show{display:block;}
+
+/* PASSWORD STRENGTH */
+.strength-bar{
+  display:flex;gap:4px;margin-top:8px;
+}
+.strength-seg{
+  flex:1;height:3px;background:var(--border);
+  border-radius:100px;transition:background 0.3s;
+}
+.strength-seg.weak{background:var(--red);}
+.strength-seg.fair{background:var(--gold);}
+.strength-seg.strong{background:var(--green);}
+.strength-label{font-size:0.72rem;color:var(--muted);margin-top:4px;}
+
+/* PLAN SELECTOR */
+.plan-selector{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;margin-bottom:20px;
+}
+.plan-option{
+  border:1.5px solid var(--border);border-radius:10px;
+  padding:14px;cursor:pointer;transition:all 0.2s;
+  position:relative;
+}
+.plan-option:hover{border-color:var(--navy-light);}
+.plan-option.selected{border-color:var(--navy);background:linear-gradient(135deg,#fff 0%,#f0f5ff 100%);}
+.plan-option-radio{
+  position:absolute;top:12px;right:12px;
+  width:16px;height:16px;border-radius:50%;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.plan-option.selected .plan-option-radio{
+  border-color:var(--navy);background:var(--navy);
+}
+.plan-option.selected .plan-option-radio::after{
+  content:'';width:6px;height:6px;border-radius:50%;background:white;
+}
+.plan-option-name{font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:2px;}
+.plan-option-price{
+  font-family:'Instrument Serif',serif;font-size:1.3rem;
+  color:var(--navy);font-weight:400;line-height:1;margin-bottom:4px;
+}
+.plan-option-desc{font-size:0.72rem;color:var(--muted);font-weight:300;line-height:1.4;}
+.founding-badge-small{
+  display:inline-block;background:var(--gold-soft);color:#92681c;
+  font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:100px;
+  text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;
+}
+
+/* CHECKBOX */
+.checkbox-row{
+  display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;
+}
+.checkbox-row input[type=checkbox]{
+  width:16px;height:16px;accent-color:var(--navy);
+  cursor:pointer;flex-shrink:0;margin-top:2px;
+}
+.checkbox-label{font-size:0.82rem;color:var(--muted);font-weight:300;line-height:1.5;}
+.checkbox-label a{color:var(--navy);text-decoration:underline;}
+
+/* SUBMIT */
+.submit-btn{
+  width:100%;padding:14px;
+  background:var(--navy);color:white;border:none;
+  border-radius:10px;font-family:'Outfit',sans-serif;
+  font-size:1rem;font-weight:700;cursor:pointer;
+  transition:background 0.2s,transform 0.15s;
+  margin-bottom:16px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.submit-btn:hover{background:var(--navy-mid);transform:translateY(-1px);}
+.submit-btn:active{transform:translateY(0);}
+.submit-btn.loading{opacity:0.7;pointer-events:none;}
+
+.form-footer-text{
+  text-align:center;font-size:0.82rem;color:var(--muted);font-weight:300;
+}
+.form-footer-text a{color:var(--navy);font-weight:600;text-decoration:none;}
+.form-footer-text a:hover{text-decoration:underline;}
+
+/* SUCCESS STATE */
+.success-state{
+  display:none;
+  flex-direction:column;align-items:center;
+  text-align:center;padding:20px 0;
+}
+.success-state.show{display:flex;}
+.success-icon{
+  width:72px;height:72px;border-radius:50%;
+  background:var(--green-soft);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;margin-bottom:20px;
+  animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both;
+}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.success-title{
+  font-family:'Instrument Serif',serif;font-size:1.8rem;
+  color:var(--navy);font-weight:400;margin-bottom:8px;letter-spacing:-0.02em;
+}
+.success-sub{
+  font-size:0.9rem;color:var(--muted);font-weight:300;
+  line-height:1.7;margin-bottom:28px;max-width:300px;
+}
+.success-btn{
+  background:var(--navy);color:white;border:none;
+  padding:13px 32px;border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:0.95rem;font-weight:700;
+  cursor:pointer;transition:background 0.2s;
+}
+.success-btn:hover{background:var(--navy-mid);}
+
+/* TRUST BADGES */
+.trust-row{
+  display:flex;align-items:center;justify-content:center;gap:20px;
+  margin-top:20px;flex-wrap:wrap;
+}
+.trust-badge{
+  display:flex;align-items:center;gap:5px;
+  font-size:0.73rem;color:var(--muted);font-weight:400;
+}
+.trust-badge span{font-size:0.85rem;}
+
+/* MOBILE */
+@media(max-width:768px){
+  .page-split{grid-template-columns:1fr;}
+  .left-panel{display:none;}
+  .right-panel{padding:32px 24px;min-height:100vh;justify-content:flex-start;padding-top:48px;}
+  .form-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-split">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <a href="index.html" class="panel-logo">AI Simplified<sup>Beta</sup></a>
+
+    <div class="panel-content">
+      <div class="panel-eyebrow">Join the community</div>
+      <div class="panel-title">Find the right AI<br>tool for <em>anything.</em></div>
+      <div class="panel-sub">Stop wasting hours searching. Tell us what you need, and we'll show you exactly which AI tools do it — with honest reviews and step-by-step setup guides.</div>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon">🔍</div>
+          <div class="feature-text">
+            <div class="feature-title">Task-based search</div>
+            <div class="feature-desc">Type what you want to accomplish. We find the best AI tools for it.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⭐</div>
+          <div class="feature-text">
+            <div class="feature-title">Honest community reviews</div>
+            <div class="feature-desc">Real people, real experiences. Zero sponsored rankings.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">▶️</div>
+          <div class="feature-text">
+            <div class="feature-title">Setup guides & videos</div>
+            <div class="feature-desc">Every tool comes with a beginner setup guide and a short video walkthrough.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💰</div>
+          <div class="feature-text">
+            <div class="feature-title">Clear pricing breakdowns</div>
+            <div class="feature-desc">We tell you exactly what's free and what's worth paying for.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="founding-promo">
+        <div class="fp-label">🎉 Founding Member Offer</div>
+        <div class="fp-title">Lock in $9/month forever — first 100 only.</div>
+        <div class="fp-sub">Sign up today and your price never increases, even as we grow.</div>
+        <div class="fp-progress">
+          <div class="fp-bar"><div class="fp-fill"></div></div>
+          <div class="fp-count"><strong>53 of 100</strong> founding spots taken</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-testimonial">
+      <div class="testimonial-text">"I spent two weeks Googling AI tools and got nowhere. Found this site and had something working the same afternoon."</div>
+      <div class="testimonial-author">
+        <div class="t-avatar">M</div>
+        <div>
+          <div class="t-name">Maria T.</div>
+          <div class="t-role">Bakery owner · Founding Member</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="form-wrap">
+
+      <!-- TAB SWITCHER -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="signupTab" onclick="showForm('signup')">Create Account</button>
+        <button class="auth-tab" id="loginTab" onclick="showForm('login')">Sign In</button>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="signupForm">
+        <div class="form-header">
+          <div class="form-title">Create your account</div>
+          <div class="form-sub">Join 4,800+ members finding better AI tools every day.</div>
+        </div>
+
+        <div class="social-btns">
+          <button class="social-btn" onclick="socialLogin('Google')">
+            <span class="social-icon">🇬</span> Continue with Google
+          </button>
+          <button class="social-btn" onclick="socialLogin('Apple')">
+            <span class="social-icon">🍎</span> Continue with Apple
+          </button>
+        </div>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-text">or sign up with email</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="Maria" id="firstName"/>
+            <div class="field-error" id="firstNameErr">Please enter your first name</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" placeholder="Torres"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="you@example.com" id="emailInput" oninput="validateEmail(this)"/>
+          <div class="field-error" id="emailErr">Please enter a valid email address</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-wrap">
+            <input class="form-input" type="password" placeholder="Create a strong password" id="passwordInput" oninput="checkStrength(this.value)"/>
+            <button class="eye-btn" onclick="togglePassword('passwordInput',this)" type="button">👁</button>
+          </div>
+          <div class="strength-bar" id="strengthBar">
+            <div class="strength-seg" id="seg1"></div>
+            <div class="strength-seg" id="seg2"></div>
+            <div class="strength-seg" id="seg3"></div>
+            <div class="strength-seg" id="seg4"></div>
+          </div>
+          <div class="strength-label" id="strengthLabel"></div>
+        </div>
+
+        <!-- PLAN SELECTOR -->
+        <div style="margin-bottom:6px;">
+          <label class="form-label">Choose your plan</label>
+        </div>
+        <div class="plan-selector">
+          <div class="plan-option" onclick="selectPlan(this,'free')" id="planFree">
+            <div class="plan-option-radio"></div>
+            <div class="plan-option-name">Free</div>
+            <div class="plan-option-price">$0</div>
+            <div class="plan-option-desc">3 searches/day, top 2 results</div>
+          </div>
+          <div class="plan-option selected" onclick="selectPlan(this,'founding')" id="planFounding">
+            <div class="plan-option-radio"></div>
+            <div class="founding-badge-small">🎉 Founding</div>
+            <div class="plan-option-name">Member</div>
+            <div class="plan-option-price">$9<small style="font-size:0.7rem;font-family:Outfit;">/mo</small></div>
+            <div class="plan-option-desc">Unlimited everything · Price locked forever</div>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="termsCheck"/>
+          <label class="checkbox-label" for="termsCheck">
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand this is a subscription that can be cancelled anytime.
+          </label>
+        </div>
+
+        <button class="submit-btn" id="signupBtn" onclick="handleSignup()">
+          Create Account →
+        </button>
+
+        <div class="form-footer-text">
+          Already have an account? <a href="#" onclick="showForm('login')">Sign in</a>
+        </div>
+
+        <div class="trust-row">
+          <div class="trust-badge"><span>🔒</span> Secure checkout</div>
+          <div class="trust-badge"><span>↩️</span> Cancel anytime</div>
+          <div class="trust-badge"><span>✓</span> No hidden fees</div>
+        </div>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginForm" style="display:none;">
+        <div class="form-header">
+          <div class="form-title">Welcome back</div>
+          <div class="form-sub">Sign in to your AI Simplified account.</div>
+        </div>
+
+        <div class="social-btns">
+          <button class="social-btn" onclick="socialLogin('Google')">
+            <span class="social-icon">🇬</span> Continue with Google
+          </button>
+          <button class="social-btn" onclick="socialLogin('Apple')">
+            <span class="social-icon">🍎</span> Continue with Apple
+          </button>
+        </div>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-text">or sign in with email</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="you@example.com"/>
+        </div>
+
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Password</label>
+          <div class="input-wrap">
+            <input class="form-input" type="password" placeholder="Your password" id="loginPass"/>
+            <button class="eye-btn" onclick="togglePassword('loginPass',this)" type="button">👁</button>
+          </div>
+        </div>
+
+        <div style="text-align:right;margin-bottom:20px;">
+          <a href="#" style="font-size:0.82rem;color:var(--navy);font-weight:600;text-decoration:none;" onclick="showForgot()">Forgot password?</a>
+        </div>
+
+        <button class="submit-btn" onclick="handleLogin()">
+          Sign In →
+        </button>
+
+        <div class="form-footer-text">
+          Don't have an account? <a href="#" onclick="showForm('signup')">Create one free</a>
+        </div>
+      </div>
+
+      <!-- FORGOT PASSWORD FORM -->
+      <div id="forgotForm" style="display:none;">
+        <div class="form-header">
+          <div class="form-title">Reset password</div>
+          <div class="form-sub">Enter your email and we'll send you a reset link.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="you@example.com"/>
+        </div>
+        <button class="submit-btn" onclick="handleForgot()">Send Reset Link →</button>
+        <div class="form-footer-text" style="margin-top:12px;">
+          <a href="#" onclick="showForm('login')">← Back to sign in</a>
+        </div>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="success-state" id="successState">
+        <div class="success-icon">✓</div>
+        <div class="success-title">You're in.</div>
+        <div class="success-sub">Welcome to AI Simplified. Your account is ready — let's find you some great tools.</div>
+        <button class="success-btn" onclick="window.location='dashboard.html'">Go to My Dashboard →</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showForm(type){
+  document.getElementById('signupForm').style.display = type==='signup' ? 'block' : 'none';
+  document.getElementById('loginForm').style.display = type==='login' ? 'block' : 'none';
+  document.getElementById('forgotForm').style.display = 'none';
+  document.getElementById('successState').classList.remove('show');
+  document.getElementById('signupTab').classList.toggle('active', type==='signup');
+  document.getElementById('loginTab').classList.toggle('active', type==='login');
+}
+
+function showForgot(){
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('forgotForm').style.display = 'block';
+}
+
+function selectPlan(el, plan){
+  document.querySelectorAll('.plan-option').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function togglePassword(id, btn){
+  const input = document.getElementById(id);
+  if(input.type==='password'){input.type='text';btn.textContent='🙈';}
+  else{input.type='password';btn.textContent='👁';}
+}
+
+function validateEmail(input){
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
+  const err = document.getElementById('emailErr');
+  input.classList.toggle('error', input.value.length>0 && !valid);
+  err.classList.toggle('show', input.value.length>0 && !valid);
+}
+
+function checkStrength(val){
+  const segs = [document.getElementById('seg1'),document.getElementById('seg2'),document.getElementById('seg3'),document.getElementById('seg4')];
+  const label = document.getElementById('strengthLabel');
+  segs.forEach(s=>s.className='strength-seg');
+  if(!val){label.textContent='';return;}
+  let score=0;
+  if(val.length>=8)score++;
+  if(/[A-Z]/.test(val))score++;
+  if(/[0-9]/.test(val))score++;
+  if(/[^A-Za-z0-9]/.test(val))score++;
+  const classes=['weak','weak','fair','strong','strong'];
+  const labels=['','Too short','Fair','Good','Strong'];
+  const colors=['','var(--red)','var(--gold)','var(--green)','var(--green)'];
+  for(let i=0;i<score;i++) segs[i].classList.add(classes[score]);
+  label.textContent=labels[score];
+  label.style.color=colors[score];
+}
+
+function handleSignup(){
+  const firstName = document.getElementById('firstName').value;
+  const email = document.getElementById('emailInput').value;
+  const pass = document.getElementById('passwordInput').value;
+  const terms = document.getElementById('termsCheck').checked;
+  let valid = true;
+
+  if(!firstName){
+    document.getElementById('firstNameErr').classList.add('show');
+    document.getElementById('firstName').classList.add('error');
+    valid=false;
+  }
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    document.getElementById('emailErr').classList.add('show');
+    document.getElementById('emailInput').classList.add('error');
+    valid=false;
+  }
+  if(!valid) return;
+
+  const btn = document.getElementById('signupBtn');
+  btn.classList.add('loading');
+  btn.textContent = 'Creating your account...';
+
+  setTimeout(()=>{
+    document.getElementById('signupForm').style.display='none';
+    document.getElementById('successState').classList.add('show');
+  }, 1800);
+}
+
+function handleLogin(){
+  const btn = event.target;
+  btn.textContent='Signing in...';
+  btn.classList.add('loading');
+  setTimeout(()=>{
+    document.getElementById('loginForm').style.display='none';
+    document.getElementById('successState').classList.add('show');
+  },1500);
+}
+
+function handleForgot(){
+  const btn = event.target;
+  btn.textContent='Sending...';
+  btn.classList.add('loading');
+  setTimeout(()=>{
+    btn.textContent='Reset link sent! Check your inbox.';
+    btn.style.background='var(--green)';
+  },1500);
+}
+
+function socialLogin(provider){
+  alert(`In the live version, this opens ${provider} OAuth. Connects via Supabase Auth.`);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Simplified — Search Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0f1f3d;
+  --navy-mid:#1a3560;
+  --navy-light:#2a4a7f;
+  --sky:#e8f0fd;
+  --sky-deep:#d0e2fb;
+  --white:#ffffff;
+  --off:#f7f8fc;
+  --ink:#111827;
+  --muted:#6b7280;
+  --border:#e2e8f0;
+  --gold:#c9a84c;
+  --gold-soft:#fdf6e3;
+  --green:#16a34a;
+  --green-soft:#dcfce7;
+  --red:#dc2626;
+  --red-soft:#fee2e2;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--off);
+  color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:64px;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Instrument Serif',serif;font-size:1.35rem;
+  color:var(--navy);text-decoration:none;letter-spacing:-0.01em;flex-shrink:0;
+}
+.logo sup{
+  font-family:'Outfit',sans-serif;font-size:0.5rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);
+  vertical-align:super;margin-left:3px;
+}
+
+/* SEARCH BAR IN NAV */
+.nav-search{
+  flex:1;max-width:520px;margin:0 32px;
+}
+.nav-search-bar{
+  display:flex;align-items:center;
+  background:var(--off);border:1.5px solid var(--border);
+  border-radius:10px;overflow:hidden;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.nav-search-bar:focus-within{
+  border-color:var(--navy);background:white;
+  box-shadow:0 0 0 3px rgba(15,31,61,0.06);
+}
+.nav-search-icon{padding:0 12px;color:var(--muted);font-size:0.9rem;flex-shrink:0;}
+.nav-search-bar input{
+  flex:1;border:none;outline:none;padding:10px 8px;
+  font-size:0.9rem;font-family:'Outfit',sans-serif;
+  background:transparent;color:var(--ink);
+}
+.nav-search-bar input::placeholder{color:#9ca3af;}
+.nav-search-btn{
+  background:var(--navy);color:white;border:none;
+  padding:10px 18px;font-size:0.82rem;font-weight:600;
+  font-family:'Outfit',sans-serif;cursor:pointer;
+  transition:background 0.2s;white-space:nowrap;
+}
+.nav-search-btn:hover{background:var(--navy-mid);}
+
+.nav-right{display:flex;align-items:center;gap:16px;flex-shrink:0;}
+.nav-link{
+  font-size:0.85rem;font-weight:500;color:var(--muted);
+  text-decoration:none;transition:color 0.2s;
+}
+.nav-link:hover{color:var(--navy);}
+.nav-member{
+  font-size:0.85rem;font-weight:600;color:white;
+  background:var(--navy);padding:8px 18px;border-radius:8px;
+  text-decoration:none;transition:background 0.2s;
+}
+.nav-member:hover{background:var(--navy-mid);}
+
+/* FOUNDING MEMBER BANNER */
+.founding-banner{
+  background:var(--navy);
+  padding:12px 48px;
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  flex-wrap:wrap;
+}
+.founding-text{
+  font-size:0.85rem;color:rgba(255,255,255,0.85);font-weight:400;
+}
+.founding-text strong{color:var(--gold);font-weight:700;}
+.founding-spots{
+  display:flex;align-items:center;gap:8px;
+}
+.spots-bar{
+  width:120px;height:6px;
+  background:rgba(255,255,255,0.15);border-radius:100px;overflow:hidden;
+}
+.spots-fill{
+  width:53%;height:100%;
+  background:var(--gold);border-radius:100px;
+  animation:fillPulse 3s ease-in-out infinite;
+}
+@keyframes fillPulse{0%,100%{opacity:1}50%{opacity:0.7}}
+.spots-label{font-size:0.78rem;color:rgba(255,255,255,0.5);}
+.founding-cta{
+  font-size:0.8rem;font-weight:700;color:var(--navy);
+  background:var(--gold);padding:6px 16px;border-radius:6px;
+  text-decoration:none;transition:opacity 0.2s;white-space:nowrap;
+}
+.founding-cta:hover{opacity:0.9;}
+
+/* LAYOUT */
+.page-layout{
+  max-width:1200px;margin:0 auto;padding:32px 48px;
+  display:grid;grid-template-columns:260px 1fr;gap:32px;
+  align-items:start;
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:sticky;top:80px;
+  background:white;border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+}
+
+.sidebar-header{
+  padding:20px 20px 16px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sidebar-title{
+  font-size:0.75rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--navy);
+}
+.clear-btn{
+  font-size:0.75rem;color:var(--muted);cursor:pointer;
+  background:none;border:none;font-family:'Outfit',sans-serif;
+  transition:color 0.2s;
+}
+.clear-btn:hover{color:var(--red);}
+
+.filter-section{padding:16px 20px;border-bottom:1px solid var(--border);}
+.filter-section:last-child{border-bottom:none;}
+.filter-label{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:12px;
+}
+.filter-options{display:flex;flex-direction:column;gap:8px;}
+.filter-option{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+}
+.filter-option input[type=checkbox]{
+  width:16px;height:16px;accent-color:var(--navy);cursor:pointer;flex-shrink:0;
+}
+.filter-option label{
+  font-size:0.87rem;color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;
+}
+.filter-count{
+  font-size:0.72rem;color:var(--muted);
+  background:var(--off);border:1px solid var(--border);
+  padding:1px 7px;border-radius:100px;
+}
+
+.rating-filter{display:flex;flex-direction:column;gap:6px;}
+.rating-row{
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  padding:4px 0;
+}
+.rating-row input{accent-color:var(--navy);cursor:pointer;}
+.stars-mini{color:#f59e0b;font-size:0.8rem;letter-spacing:1px;}
+.rating-row span{font-size:0.83rem;color:var(--muted);}
+
+.price-range{padding:8px 0;}
+.price-inputs{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.price-input{
+  flex:1;padding:8px 10px;border:1.5px solid var(--border);
+  border-radius:8px;font-size:0.83rem;font-family:'Outfit',sans-serif;
+  color:var(--ink);outline:none;transition:border-color 0.2s;
+}
+.price-input:focus{border-color:var(--navy);}
+.price-sep{font-size:0.8rem;color:var(--muted);}
+
+.apply-btn{
+  width:100%;margin-top:16px;padding:10px;
+  background:var(--navy);color:white;border:none;
+  border-radius:9px;font-family:'Outfit',sans-serif;
+  font-size:0.85rem;font-weight:600;cursor:pointer;
+  transition:background 0.2s;
+}
+.apply-btn:hover{background:var(--navy-mid);}
+
+/* MAIN CONTENT */
+.main-content{}
+
+/* RESULTS HEADER */
+.results-head{
+  background:white;border:1px solid var(--border);
+  border-radius:16px;padding:24px 28px;margin-bottom:20px;
+}
+
+.results-query-row{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:16px;margin-bottom:16px;flex-wrap:wrap;
+}
+.results-query{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(1.4rem,3vw,2rem);font-weight:400;
+  color:var(--navy);letter-spacing:-0.02em;line-height:1.2;
+}
+.results-query em{font-style:italic;}
+
+.results-actions{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.sort-select{
+  padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;
+  font-size:0.83rem;font-family:'Outfit',sans-serif;color:var(--ink);
+  background:white;outline:none;cursor:pointer;transition:border-color 0.2s;
+}
+.sort-select:focus{border-color:var(--navy);}
+.view-toggle{display:flex;gap:4px;}
+.view-btn{
+  width:34px;height:34px;border:1.5px solid var(--border);
+  border-radius:8px;background:white;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;transition:all 0.2s;color:var(--muted);
+}
+.view-btn.active{background:var(--navy);border-color:var(--navy);color:white;}
+
+.results-meta-row{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.results-count{font-size:0.82rem;color:var(--muted);font-weight:400;}
+.active-filters{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-tag{
+  display:flex;align-items:center;gap:6px;
+  background:var(--sky);color:var(--navy-mid);
+  font-size:0.75rem;font-weight:600;
+  padding:4px 10px;border-radius:100px;
+  border:1px solid rgba(26,53,96,0.15);
+}
+.filter-tag button{
+  background:none;border:none;cursor:pointer;
+  color:var(--navy-mid);font-size:0.7rem;line-height:1;
+  padding:0;transition:color 0.2s;
+}
+.filter-tag button:hover{color:var(--red);}
+
+/* CATEGORY TABS */
+.category-tabs{
+  display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;
+}
+.cat-tab{
+  padding:8px 18px;border:1.5px solid var(--border);
+  border-radius:100px;background:white;
+  font-size:0.82rem;font-weight:500;color:var(--muted);
+  cursor:pointer;transition:all 0.2s;white-space:nowrap;
+}
+.cat-tab:hover{border-color:var(--navy-light);color:var(--navy);}
+.cat-tab.active{
+  background:var(--navy);border-color:var(--navy);color:white;font-weight:600;
+}
+
+/* TOOL CARDS LIST */
+.tool-list{display:flex;flex-direction:column;gap:12px;}
+
+.tool-card{
+  background:white;border:1.5px solid var(--border);
+  border-radius:16px;padding:24px 28px;
+  display:grid;grid-template-columns:56px 1fr auto;
+  gap:20px;align-items:start;
+  transition:border-color 0.2s,box-shadow 0.2s,transform 0.2s;
+  cursor:pointer;position:relative;overflow:hidden;
+  animation:cardIn 0.4s ease both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.tool-card:hover{
+  border-color:var(--navy-light);
+  box-shadow:0 6px 28px rgba(15,31,61,0.08);
+  transform:translateY(-2px);
+}
+.tool-card.featured{
+  border-color:var(--navy);
+  background:linear-gradient(135deg,#fff 0%,#f0f5ff 100%);
+}
+.tool-card:nth-child(1){animation-delay:0.05s}
+.tool-card:nth-child(2){animation-delay:0.1s}
+.tool-card:nth-child(3){animation-delay:0.15s}
+.tool-card:nth-child(4){animation-delay:0.2s}
+.tool-card:nth-child(5){animation-delay:0.25s}
+.tool-card:nth-child(6){animation-delay:0.3s}
+
+.top-badge{
+  position:absolute;top:0;left:0;
+  background:var(--navy);color:white;
+  font-size:0.65rem;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;padding:5px 14px;
+  border-radius:0 0 10px 0;
+}
+
+.tool-logo{
+  width:56px;height:56px;border-radius:13px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:1.5rem;
+  flex-shrink:0;border:1px solid rgba(0,0,0,0.06);
+}
+
+.tool-body{min-width:0;}
+.tool-name-row{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:5px;flex-wrap:wrap;
+}
+.tool-name{
+  font-family:'Instrument Serif',serif;font-size:1.2rem;
+  font-weight:400;color:var(--navy);letter-spacing:-0.01em;
+}
+.tool-category-tag{
+  font-size:0.68rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:0.08em;padding:2px 9px;border-radius:100px;
+  background:var(--off);color:var(--muted);border:1px solid var(--border);
+}
+.tool-tag{
+  font-size:0.68rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:0.08em;padding:2px 9px;border-radius:100px;
+}
+.tag-freemium{background:var(--sky);color:var(--navy-mid);}
+.tag-paid{background:var(--gold-soft);color:#92681c;}
+.tag-free{background:var(--green-soft);color:var(--green);}
+
+.tool-desc{
+  font-size:0.88rem;color:var(--muted);line-height:1.65;
+  margin-bottom:14px;font-weight:300;max-width:580px;
+}
+
+.tool-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{
+  font-size:0.75rem;font-weight:500;color:var(--ink);
+  background:var(--off);border:1px solid var(--border);
+  padding:3px 10px;border-radius:100px;
+}
+
+.tool-right{
+  display:flex;flex-direction:column;
+  align-items:flex-end;gap:10px;
+  flex-shrink:0;min-width:148px;
+}
+.rating-block{text-align:right;}
+.stars-row{color:#f59e0b;font-size:0.85rem;letter-spacing:1.5px;}
+.rating-num{
+  font-family:'Instrument Serif',serif;font-size:1.6rem;
+  color:var(--navy);line-height:1.1;font-weight:400;
+}
+.rating-label{font-size:0.7rem;color:var(--muted);}
+
+.price-block{text-align:right;}
+.price-from{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
+.price-val{
+  font-family:'Instrument Serif',serif;font-size:1.3rem;
+  color:var(--navy);font-weight:400;
+}
+
+.card-btns{display:flex;flex-direction:column;gap:7px;width:100%;}
+.btn-guide{
+  background:var(--navy);color:white;border:none;
+  padding:9px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;
+  cursor:pointer;font-family:'Outfit',sans-serif;
+  transition:background 0.2s;text-align:center;white-space:nowrap;
+}
+.btn-guide:hover{background:var(--navy-mid);}
+.btn-vid{
+  background:transparent;color:var(--navy);
+  border:1.5px solid var(--border);
+  padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:500;
+  cursor:pointer;font-family:'Outfit',sans-serif;
+  transition:all 0.2s;display:flex;align-items:center;
+  justify-content:center;gap:5px;white-space:nowrap;
+}
+.btn-vid:hover{border-color:var(--navy);}
+
+/* SAVE BUTTON */
+.save-btn{
+  position:absolute;top:20px;right:20px;
+  width:32px;height:32px;border-radius:50%;
+  border:1.5px solid var(--border);background:white;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:0.85rem;transition:all 0.2s;color:var(--muted);
+}
+.save-btn:hover{border-color:var(--navy);color:var(--navy);}
+.save-btn.saved{background:var(--sky);border-color:var(--navy);color:var(--navy);}
+
+/* GRID VIEW */
+.tool-list.grid-view{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+}
+.tool-list.grid-view .tool-card{
+  grid-template-columns:1fr;
+  padding:22px;
+}
+.tool-list.grid-view .tool-right{
+  flex-direction:row;align-items:center;
+  justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.tool-list.grid-view .card-btns{flex-direction:row;}
+
+/* PAYWALL */
+.paywall-strip{
+  background:var(--navy);border-radius:14px;
+  padding:32px 36px;margin-top:8px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;
+}
+.paywall-left h3{
+  font-family:'Instrument Serif',serif;font-size:1.4rem;
+  font-weight:400;color:white;margin-bottom:6px;letter-spacing:-0.02em;
+}
+.paywall-left p{
+  font-size:0.85rem;color:rgba(255,255,255,0.4);
+  font-weight:300;line-height:1.6;max-width:380px;
+}
+.paywall-right-block{display:flex;align-items:center;gap:16px;flex-shrink:0;}
+.paywall-price-tag{text-align:right;}
+.paywall-price-tag span{
+  font-family:'Instrument Serif',serif;font-size:2.5rem;
+  color:white;font-weight:400;
+}
+.paywall-price-tag small{display:block;font-size:0.73rem;color:rgba(255,255,255,0.3);}
+.btn-paywall{
+  background:white;color:var(--navy);border:none;
+  padding:12px 28px;border-radius:9px;
+  font-family:'Outfit',sans-serif;font-size:0.88rem;font-weight:700;
+  cursor:pointer;transition:all 0.2s;white-space:nowrap;
+}
+.btn-paywall:hover{background:var(--sky);transform:translateY(-1px);}
+
+/* ALSO SEARCHED */
+.also-section{margin-top:32px;}
+.also-title{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:12px;
+}
+.also-pills{display:flex;flex-wrap:wrap;gap:8px;}
+.also-pill{
+  background:white;border:1px solid var(--border);
+  font-size:0.83rem;font-weight:500;color:var(--ink);
+  padding:8px 16px;border-radius:100px;cursor:pointer;
+  transition:all 0.2s;text-decoration:none;display:block;
+}
+.also-pill:hover{background:var(--sky);border-color:var(--navy-light);color:var(--navy);}
+
+/* PAGINATION */
+.pagination{
+  display:flex;align-items:center;justify-content:center;
+  gap:6px;margin-top:32px;
+}
+.page-btn{
+  width:38px;height:38px;border:1.5px solid var(--border);
+  border-radius:9px;background:white;font-size:0.85rem;
+  font-family:'Outfit',sans-serif;font-weight:500;color:var(--ink);
+  cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;
+}
+.page-btn:hover{border-color:var(--navy);color:var(--navy);}
+.page-btn.active{background:var(--navy);border-color:var(--navy);color:white;font-weight:600;}
+.page-btn.nav-page{color:var(--muted);}
+
+/* MOBILE */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-search{display:none;}
+  .page-layout{grid-template-columns:1fr;padding:20px;}
+  .sidebar{position:relative;top:0;}
+  .founding-banner{padding:10px 20px;}
+  .tool-card{grid-template-columns:1fr;gap:14px;}
+  .tool-right{flex-direction:row;align-items:center;flex-wrap:wrap;gap:10px;}
+  .card-btns{flex-direction:row;}
+  .tool-list.grid-view{grid-template-columns:1fr;}
+  .paywall-strip{flex-direction:column;}
+  .paywall-right-block{flex-direction:column;align-items:flex-start;}
+}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">AI Simplified<sup>Beta</sup></a>
+  <div class="nav-search">
+    <div class="nav-search-bar">
+      <span class="nav-search-icon">🔍</span>
+      <input type="text" id="navSearch" value="write better emails" autocomplete="off"/>
+      <button class="nav-search-btn" onclick="updateSearch()">Search</button>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a href="community.html" class="nav-link">Community</a>
+    <a href="pricing.html" class="nav-link">Pricing</a>
+    <a href="signup.html" class="nav-member">Get Access</a>
+  </div>
+</nav>
+
+<!-- FOUNDING MEMBER BANNER -->
+<div class="founding-banner">
+  <div class="founding-text">
+    🎉 <strong>Founding Member offer:</strong> First 100 members get $9/month locked in forever.
+  </div>
+  <div class="founding-spots">
+    <div class="spots-bar"><div class="spots-fill"></div></div>
+    <span class="spots-label" id="spotsLeft">47 of 100 spots remaining</span>
+  </div>
+  <a href="signup.html" class="founding-cta">Claim Your Spot →</a>
+</div>
+
+<!-- PAGE LAYOUT -->
+<div class="page-layout">
+
+  <!-- SIDEBAR FILTERS -->
+  <aside class="sidebar reveal">
+    <div class="sidebar-header">
+      <span class="sidebar-title">Filters</span>
+      <button class="clear-btn" onclick="clearFilters()">Clear all</button>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-label">Pricing Model</div>
+      <div class="filter-options">
+        <label class="filter-option">
+          <input type="checkbox" checked onchange="filterResults()">
+          <label>Free <span class="filter-count">12</span></label>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" checked onchange="filterResults()">
+          <label>Freemium <span class="filter-count">8</span></label>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" onchange="filterResults()">
+          <label>Paid only <span class="filter-count">5</span></label>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" onchange="filterResults()">
+          <label>Free trial <span class="filter-count">7</span></label>
+        </label>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-label">Community Rating</div>
+      <div class="rating-filter">
+        <label class="rating-row">
+          <input type="radio" name="rating" checked>
+          <span class="stars-mini">★★★★★</span>
+          <span>4.5 & up</span>
+        </label>
+        <label class="rating-row">
+          <input type="radio" name="rating">
+          <span class="stars-mini">★★★★☆</span>
+          <span>4.0 & up</span>
+        </label>
+        <label class="rating-row">
+          <input type="radio" name="rating">
+          <span class="stars-mini">★★★☆☆</span>
+          <span>3.0 & up</span>
+        </label>
+        <label class="rating-row">
+          <input type="radio" name="rating">
+          <span>Any rating</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-label">Monthly Price Range</div>
+      <div class="price-range">
+        <div class="price-inputs">
+          <input type="text" class="price-input" placeholder="$0" id="priceMin">
+          <span class="price-sep">—</span>
+          <input type="text" class="price-input" placeholder="$100" id="priceMax">
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-label">Platform</div>
+      <div class="filter-options">
+        <label class="filter-option">
+          <input type="checkbox" checked onchange="filterResults()">
+          <label>Web browser <span class="filter-count">21</span></label>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" onchange="filterResults()">
+          <label>Mobile app <span class="filter-count">14</span></label>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" onchange="filterResults()">
+          <label>Chrome extension <span class="filter-count">9</span></label>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" onchange="filterResults()">
+          <label>Desktop app <span class="filter-count">6</span></label>
+        </label>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-label">Setup Difficulty</div>
+      <div class="filter-options">
+        <label class="filter-option">
+          <input type="checkbox" checked onchange="filterResults()">
+          <label>Beginner friendly <span class="filter-count">18</span></label>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" onchange="filterResults()">
+          <label>Some setup needed <span class="filter-count">10</span></label>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" onchange="filterResults()">
+          <label>Technical <span class="filter-count">4</span></label>
+        </label>
+      </div>
+      <button class="apply-btn" onclick="filterResults()">Apply Filters</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- RESULTS HEADER -->
+    <div class="results-head reveal">
+      <div class="results-query-row">
+        <div class="results-query">
+          Best AI tools to <em id="queryDisplay">"write better emails"</em>
+        </div>
+        <div class="results-actions">
+          <select class="sort-select" onchange="sortResults(this.value)">
+            <option value="rating">Sort: Top Rated</option>
+            <option value="price">Sort: Price (Low→High)</option>
+            <option value="reviews">Sort: Most Reviewed</option>
+            <option value="newest">Sort: Newest</option>
+          </select>
+          <div class="view-toggle">
+            <button class="view-btn active" id="listViewBtn" onclick="setView('list')" title="List view">☰</button>
+            <button class="view-btn" id="gridViewBtn" onclick="setView('grid')" title="Grid view">⊞</button>
+          </div>
+        </div>
+      </div>
+      <div class="results-meta-row">
+        <span class="results-count" id="resultsCount">Showing 6 of 9 results</span>
+        <div class="active-filters">
+          <div class="filter-tag">Free & Freemium <button onclick="removeFilter(this)">×</button></div>
+          <div class="filter-tag">4.5+ stars <button onclick="removeFilter(this)">×</button></div>
+          <div class="filter-tag">Beginner friendly <button onclick="removeFilter(this)">×</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY TABS -->
+    <div class="category-tabs reveal">
+      <button class="cat-tab active" onclick="setCategory(this,'all')">All Tools (9)</button>
+      <button class="cat-tab" onclick="setCategory(this,'email')">Email AI (4)</button>
+      <button class="cat-tab" onclick="setCategory(this,'writing')">Writing AI (3)</button>
+      <button class="cat-tab" onclick="setCategory(this,'productivity')">Productivity (2)</button>
+    </div>
+
+    <!-- TOOL CARDS -->
+    <div class="tool-list" id="toolList">
+
+      <!-- Card 1: Top Pick -->
+      <div class="tool-card featured">
+        <div class="top-badge">⭐ Top Pick</div>
+        <button class="save-btn" onclick="toggleSave(this)" title="Save tool">♡</button>
+        <div class="tool-logo" style="background:#dbeafe;color:#1e40af;">G</div>
+        <div class="tool-body">
+          <div class="tool-name-row">
+            <span class="tool-name">Gemini for Gmail</span>
+            <span class="tool-category-tag">Email AI</span>
+            <span class="tool-tag tag-freemium">Freemium</span>
+          </div>
+          <p class="tool-desc">Google's AI lives inside Gmail — nothing extra to install. Drafts, rewrites, and summarizes emails in seconds. The fastest AI win for anyone already on Gmail.</p>
+          <div class="tool-chips">
+            <span class="chip">⚡ Built into Gmail</span>
+            <span class="chip">🆓 Free to start</span>
+            <span class="chip">📱 Mobile + Desktop</span>
+            <span class="chip">⏱ 5 min setup</span>
+            <span class="chip">😊 Beginner friendly</span>
+          </div>
+        </div>
+        <div class="tool-right">
+          <div class="rating-block">
+            <div class="stars-row">★★★★★</div>
+            <div class="rating-num">4.8</div>
+            <div class="rating-label">1,243 reviews</div>
+          </div>
+          <div class="price-block">
+            <div class="price-from">From</div>
+            <div class="price-val">Free</div>
+          </div>
+          <div class="card-btns">
+            <button class="btn-guide" onclick="window.location='tool-detail.html'">Full Guide →</button>
+            <button class="btn-vid">▶ 3 min video</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="tool-card">
+        <button class="save-btn" onclick="toggleSave(this)" title="Save tool">♡</button>
+        <div class="tool-logo" style="background:#ede9fe;color:#5b21b6;">C</div>
+        <div class="tool-body">
+          <div class="tool-name-row">
+            <span class="tool-name">Claude</span>
+            <span class="tool-category-tag">Writing AI</span>
+            <span class="tool-tag tag-freemium">Freemium</span>
+          </div>
+          <p class="tool-desc">Paste rough notes and Claude turns them into polished emails that match your exact tone. Works in any browser — not just Gmail.</p>
+          <div class="tool-chips">
+            <span class="chip">🌐 Works anywhere</span>
+            <span class="chip">🆓 Free tier</span>
+            <span class="chip">🎯 Tone matching</span>
+            <span class="chip">😊 Beginner friendly</span>
+          </div>
+        </div>
+        <div class="tool-right">
+          <div class="rating-block">
+            <div class="stars-row">★★★★★</div>
+            <div class="rating-num">4.7</div>
+            <div class="rating-label">987 reviews</div>
+          </div>
+          <div class="price-block">
+            <div class="price-from">From</div>
+            <div class="price-val">Free</div>
+          </div>
+          <div class="card-btns">
+            <button class="btn-guide" onclick="window.location='tool-detail.html'">Full Guide →</button>
+            <button class="btn-vid">▶ 4 min video</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="tool-card">
+        <button class="save-btn" onclick="toggleSave(this)" title="Save tool">♡</button>
+        <div class="tool-logo" style="background:#dcfce7;color:#166534;">L</div>
+        <div class="tool-body">
+          <div class="tool-name-row">
+            <span class="tool-name">Lavender</span>
+            <span class="tool-category-tag">Email AI</span>
+            <span class="tool-tag tag-paid">Paid</span>
+          </div>
+          <p class="tool-desc">Built for sales outreach. Real-time email scoring shows you exactly what's hurting your reply rate. Worth it if you're in sales — overkill if you're not.</p>
+          <div class="tool-chips">
+            <span class="chip">📧 Gmail + Outlook</span>
+            <span class="chip">📊 Real-time scoring</span>
+            <span class="chip">🎯 Sales focused</span>
+          </div>
+        </div>
+        <div class="tool-right">
+          <div class="rating-block">
+            <div class="stars-row">★★★★☆</div>
+            <div class="rating-num">4.4</div>
+            <div class="rating-label">521 reviews</div>
+          </div>
+          <div class="price-block">
+            <div class="price-from">From</div>
+            <div class="price-val">$29<small style="font-family:Outfit;font-size:0.7rem;">/mo</small></div>
+          </div>
+          <div class="card-btns">
+            <button class="btn-guide" onclick="window.location='tool-detail.html'">Full Guide →</button>
+            <button class="btn-vid">▶ 5 min video</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYWALL -->
+      <div class="paywall-strip">
+        <div class="paywall-left">
+          <h3>6 more tools — members only.</h3>
+          <p>Unlock the full ranked list, side-by-side pricing tables, community pros & cons, and complete setup guides with video walkthroughs for every tool.</p>
+        </div>
+        <div class="paywall-right-block">
+          <div class="paywall-price-tag">
+            <span>$9</span>
+            <small>per month · cancel anytime</small>
+          </div>
+          <button class="btn-paywall" onclick="window.location='signup.html'">Unlock Full Access →</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ALSO SEARCHED -->
+    <div class="also-section reveal">
+      <div class="also-title">People also searched for</div>
+      <div class="also-pills">
+        <a href="#" class="also-pill" onclick="searchFor('summarize emails automatically')">Summarize emails automatically</a>
+        <a href="#" class="also-pill" onclick="searchFor('schedule emails with AI')">Schedule emails with AI</a>
+        <a href="#" class="also-pill" onclick="searchFor('reply to emails faster')">Reply to emails faster</a>
+        <a href="#" class="also-pill" onclick="searchFor('cold outreach email AI')">Cold outreach email AI</a>
+        <a href="#" class="also-pill" onclick="searchFor('email subject line generator')">Email subject line generator</a>
+        <a href="#" class="also-pill" onclick="searchFor('professional email templates AI')">Professional email templates</a>
+      </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination reveal">
+      <button class="page-btn nav-page">←</button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn" onclick="setPage(this)">2</button>
+      <button class="page-btn" onclick="setPage(this)">3</button>
+      <span style="color:var(--muted);font-size:0.9rem;padding:0 4px;">...</span>
+      <button class="page-btn" onclick="setPage(this)">8</button>
+      <button class="page-btn nav-page">→</button>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function updateSearch(){
+  const val = document.getElementById('navSearch').value.trim();
+  if(!val) return;
+  document.getElementById('queryDisplay').textContent = `"${val}"`;
+}
+document.getElementById('navSearch').addEventListener('keydown',e=>{
+  if(e.key==='Enter') updateSearch();
+});
+
+function setView(type){
+  const list = document.getElementById('toolList');
+  const lb = document.getElementById('listViewBtn');
+  const gb = document.getElementById('gridViewBtn');
+  if(type==='grid'){
+    list.classList.add('grid-view');
+    gb.classList.add('active'); lb.classList.remove('active');
+  } else {
+    list.classList.remove('grid-view');
+    lb.classList.add('active'); gb.classList.remove('active');
+  }
+}
+
+function setCategory(el, cat){
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleSave(btn){
+  btn.classList.toggle('saved');
+  btn.textContent = btn.classList.contains('saved') ? '♥' : '♡';
+}
+
+function removeFilter(btn){
+  btn.closest('.filter-tag').remove();
+}
+
+function clearFilters(){
+  document.querySelectorAll('.sidebar input[type=checkbox]').forEach(cb=>cb.checked=false);
+}
+
+function filterResults(){ /* would trigger real filter in production */ }
+function sortResults(val){ /* would sort in production */ }
+
+function setPage(btn){
+  document.querySelectorAll('.page-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function searchFor(term){
+  document.getElementById('navSearch').value = term;
+  document.getElementById('queryDisplay').textContent = `"${term}"`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Reveal animations
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('in'),(i%3)*80);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:0.06});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Animate spots counter
+let spots = 47;
+setInterval(()=>{
+  if(Math.random()>0.7 && spots>1){
+    spots--;
+    document.getElementById('spotsLeft').textContent = `${spots} of 100 spots remaining`;
+  }
+},8000);
+</script>
+</body>
+</html>

@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini for Gmail — AI Simplified</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0f1f3d;
+  --navy-mid:#1a3560;
+  --navy-light:#2a4a7f;
+  --sky:#e8f0fd;
+  --white:#ffffff;
+  --off:#f7f8fc;
+  --ink:#111827;
+  --muted:#6b7280;
+  --border:#e2e8f0;
+  --gold:#c9a84c;
+  --gold-soft:#fdf6e3;
+  --green:#16a34a;
+  --green-soft:#dcfce7;
+  --red:#dc2626;
+  --red-soft:#fee2e2;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--off);color:var(--ink);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:64px;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Instrument Serif',serif;font-size:1.35rem;
+  color:var(--navy);text-decoration:none;letter-spacing:-0.01em;
+}
+.logo sup{
+  font-family:'Outfit',sans-serif;font-size:0.5rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);
+  vertical-align:super;margin-left:3px;
+}
+.nav-search-bar{
+  display:flex;align-items:center;flex:1;max-width:440px;margin:0 32px;
+  background:var(--off);border:1.5px solid var(--border);
+  border-radius:10px;overflow:hidden;transition:border-color 0.2s;
+}
+.nav-search-bar:focus-within{border-color:var(--navy);background:white;}
+.nav-search-bar input{
+  flex:1;border:none;outline:none;padding:9px 12px;
+  font-size:0.88rem;font-family:'Outfit',sans-serif;
+  background:transparent;color:var(--ink);
+}
+.nav-search-bar input::placeholder{color:#9ca3af;}
+.nav-search-btn{
+  background:var(--navy);color:white;border:none;
+  padding:9px 16px;font-size:0.82rem;font-weight:600;
+  font-family:'Outfit',sans-serif;cursor:pointer;
+}
+.nav-right{display:flex;align-items:center;gap:16px;}
+.nav-link{font-size:0.85rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-link:hover{color:var(--navy);}
+.nav-cta{
+  font-size:0.85rem;font-weight:600;color:white;
+  background:var(--navy);padding:8px 18px;border-radius:8px;
+  text-decoration:none;transition:background 0.2s;
+}
+.nav-cta:hover{background:var(--navy-mid);}
+
+/* BREADCRUMB */
+.breadcrumb{
+  padding:14px 48px;
+  display:flex;align-items:center;gap:8px;
+  font-size:0.8rem;color:var(--muted);
+  background:white;border-bottom:1px solid var(--border);
+}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.breadcrumb a:hover{color:var(--navy);}
+.breadcrumb span{color:var(--border);}
+.breadcrumb strong{color:var(--navy);font-weight:600;}
+
+/* LAYOUT */
+.page-wrap{
+  max-width:1160px;margin:0 auto;
+  padding:32px 48px;
+  display:grid;
+  grid-template-columns:1fr 300px;
+  gap:32px;align-items:start;
+}
+
+/* ── LEFT COLUMN ── */
+
+/* TOOL HERO */
+.tool-hero{
+  background:white;border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;margin-bottom:24px;
+}
+.tool-hero-top{
+  padding:32px 36px 28px;
+  border-bottom:1px solid var(--border);
+}
+.tool-hero-header{
+  display:flex;align-items:flex-start;gap:20px;margin-bottom:20px;
+}
+.big-logo{
+  width:80px;height:80px;border-radius:18px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:2.2rem;
+  border:1px solid rgba(0,0,0,0.07);flex-shrink:0;
+}
+.hero-title-block{flex:1;}
+.hero-tags{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.tool-tag{
+  font-size:0.68rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.08em;padding:3px 10px;border-radius:100px;
+}
+.tag-freemium{background:var(--sky);color:var(--navy-mid);}
+.tag-top{background:var(--navy);color:white;}
+.tag-verified{background:var(--green-soft);color:var(--green);}
+.tool-title{
+  font-family:'Instrument Serif',serif;font-size:2.2rem;
+  font-weight:400;color:var(--navy);letter-spacing:-0.025em;
+  line-height:1.1;margin-bottom:6px;
+}
+.tool-made-by{font-size:0.85rem;color:var(--muted);font-weight:300;}
+.tool-made-by strong{color:var(--ink);font-weight:500;}
+
+.hero-rating-row{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.big-stars{color:#f59e0b;font-size:1.1rem;letter-spacing:2px;}
+.big-score{
+  font-family:'Instrument Serif',serif;font-size:1.8rem;
+  color:var(--navy);font-weight:400;line-height:1;
+}
+.rating-breakdown{display:flex;flex-direction:column;gap:3px;}
+.rating-bar-row{display:flex;align-items:center;gap:8px;}
+.bar-label{font-size:0.72rem;color:var(--muted);width:30px;text-align:right;}
+.bar-track{width:100px;height:5px;background:var(--border);border-radius:100px;overflow:hidden;}
+.bar-fill{height:100%;background:var(--gold);border-radius:100px;}
+.bar-count{font-size:0.7rem;color:var(--muted);width:28px;}
+.total-reviews{font-size:0.82rem;color:var(--muted);font-weight:300;}
+
+/* QUICK STATS */
+.quick-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--border);
+}
+.stat{
+  padding:20px;text-align:center;
+  border-right:1px solid var(--border);
+}
+.stat:last-child{border-right:none;}
+.stat-val{
+  font-family:'Instrument Serif',serif;font-size:1.4rem;
+  color:var(--navy);font-weight:400;margin-bottom:4px;
+}
+.stat-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;}
+
+/* VIDEO SECTION */
+.video-section{
+  background:white;border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;margin-bottom:24px;
+}
+.section-head{
+  padding:22px 28px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.section-title{
+  font-family:'Instrument Serif',serif;font-size:1.25rem;
+  font-weight:400;color:var(--navy);letter-spacing:-0.015em;
+}
+.section-eyebrow{
+  font-size:0.7rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:4px;
+}
+.video-player{
+  position:relative;background:var(--navy);aspect-ratio:16/9;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;overflow:hidden;
+}
+.video-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#0f1f3d 0%,#1a3560 50%,#0f1f3d 100%);
+}
+.video-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.play-btn{
+  position:relative;z-index:1;
+  width:72px;height:72px;border-radius:50%;
+  background:white;display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+}
+.play-btn:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
+.video-caption{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,0.7));
+  padding:24px 24px 18px;z-index:1;
+}
+.video-caption h4{
+  font-family:'Instrument Serif',serif;font-size:1rem;
+  color:white;font-weight:400;margin-bottom:3px;
+}
+.video-caption span{font-size:0.78rem;color:rgba(255,255,255,0.5);}
+.video-tabs{
+  display:flex;gap:0;border-bottom:1px solid var(--border);
+}
+.vtab{
+  padding:12px 20px;font-size:0.82rem;font-weight:500;color:var(--muted);
+  cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;
+  background:none;border-top:none;border-left:none;border-right:none;
+  font-family:'Outfit',sans-serif;
+}
+.vtab.active{color:var(--navy);border-bottom-color:var(--navy);font-weight:600;}
+.vtab:hover:not(.active){color:var(--ink);}
+
+/* SETUP GUIDE */
+.setup-guide{
+  background:white;border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;margin-bottom:24px;
+}
+.guide-body{padding:28px;}
+.guide-intro{
+  font-size:0.92rem;color:var(--muted);font-weight:300;
+  line-height:1.75;margin-bottom:28px;
+  padding-bottom:24px;border-bottom:1px solid var(--border);
+}
+
+.guide-steps{display:flex;flex-direction:column;gap:0;}
+.guide-step{
+  display:flex;gap:20px;padding:20px 0;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+}
+.guide-step:last-child{border-bottom:none;}
+.guide-step:hover .step-content{color:var(--navy);}
+.step-num-circle{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--sky);border:1.5px solid rgba(26,53,96,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:0.95rem;
+  color:var(--navy-mid);font-weight:400;flex-shrink:0;
+  transition:all 0.2s;
+}
+.guide-step:hover .step-num-circle{
+  background:var(--navy);border-color:var(--navy);color:white;
+}
+.guide-step.completed .step-num-circle{
+  background:var(--green);border-color:var(--green);color:white;
+}
+.step-content{flex:1;}
+.step-title{
+  font-size:0.95rem;font-weight:600;color:var(--ink);
+  margin-bottom:4px;transition:color 0.2s;
+}
+.step-desc{
+  font-size:0.85rem;color:var(--muted);font-weight:300;line-height:1.6;
+}
+.step-time{
+  font-size:0.72rem;color:var(--muted);
+  background:var(--off);border:1px solid var(--border);
+  padding:2px 8px;border-radius:100px;flex-shrink:0;align-self:flex-start;
+  margin-top:2px;
+}
+
+.guide-tip{
+  margin-top:24px;padding:16px 20px;
+  background:var(--gold-soft);border:1px solid rgba(201,168,76,0.3);
+  border-radius:10px;display:flex;gap:12px;align-items:flex-start;
+}
+.tip-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.tip-text{font-size:0.85rem;color:#7a5c1e;font-weight:400;line-height:1.6;}
+.tip-text strong{font-weight:600;}
+
+/* PRICING TABLE */
+.pricing-section{
+  background:white;border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;margin-bottom:24px;
+}
+.pricing-body{padding:28px;}
+.pricing-intro{
+  font-size:0.88rem;color:var(--muted);font-weight:300;
+  line-height:1.7;margin-bottom:24px;
+}
+.pricing-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+.pricing-table th{
+  padding:10px 16px;text-align:left;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--muted);
+  background:var(--off);border-bottom:1px solid var(--border);
+}
+.pricing-table td{
+  padding:14px 16px;font-size:0.88rem;
+  border-bottom:1px solid var(--border);vertical-align:top;
+}
+.pricing-table tr:last-child td{border-bottom:none;}
+.pricing-table tr:hover td{background:#fafbff;}
+.plan-name-cell{font-weight:600;color:var(--navy);}
+.price-cell{
+  font-family:'Instrument Serif',serif;font-size:1.1rem;
+  color:var(--navy);font-weight:400;
+}
+.free-badge{
+  display:inline-block;background:var(--green-soft);color:var(--green);
+  font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:100px;
+}
+.check-cell{color:var(--green);font-size:0.9rem;}
+.cross-cell{color:#d1d5db;font-size:0.9rem;}
+
+.verdict-box{
+  padding:16px 20px;background:var(--sky);
+  border:1px solid rgba(26,53,96,0.12);border-radius:10px;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.verdict-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.verdict-text{font-size:0.85rem;color:var(--navy-mid);font-weight:400;line-height:1.6;}
+.verdict-text strong{font-weight:600;color:var(--navy);}
+
+/* PROS CONS */
+.pros-cons{
+  background:white;border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;margin-bottom:24px;
+}
+.pros-cons-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.pros-side{padding:24px;border-right:1px solid var(--border);}
+.cons-side{padding:24px;}
+.pc-head{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.78rem;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;margin-bottom:16px;
+}
+.pros-head{color:var(--green);}
+.cons-head{color:var(--red);}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.pc-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:0.87rem;font-weight:300;color:var(--ink);line-height:1.55;
+}
+.pro-dot{color:var(--green);font-size:1rem;flex-shrink:0;margin-top:-1px;}
+.con-dot{color:var(--red);font-size:1rem;flex-shrink:0;margin-top:-1px;}
+
+/* COMMUNITY REVIEWS */
+.reviews-section{
+  background:white;border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;margin-bottom:24px;
+}
+.reviews-body{padding:28px;}
+
+.review-summary-bar{
+  display:flex;align-items:center;gap:32px;
+  padding-bottom:24px;border-bottom:1px solid var(--border);margin-bottom:24px;
+  flex-wrap:wrap;gap:24px;
+}
+.review-big-num{
+  font-family:'Instrument Serif',serif;font-size:4rem;
+  color:var(--navy);font-weight:400;line-height:1;
+}
+.review-big-stars{color:#f59e0b;font-size:1.1rem;letter-spacing:2px;margin-bottom:4px;}
+.review-big-label{font-size:0.78rem;color:var(--muted);font-weight:300;}
+.bars-block{flex:1;min-width:180px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:5px;}
+.bar-stars-label{font-size:0.75rem;color:var(--muted);width:36px;flex-shrink:0;}
+.bar-outer{flex:1;height:7px;background:var(--border);border-radius:100px;overflow:hidden;}
+.bar-inner{height:100%;background:var(--gold);border-radius:100px;}
+.bar-pct{font-size:0.72rem;color:var(--muted);width:28px;text-align:right;}
+
+.review-filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.rev-filter{
+  padding:6px 14px;border:1.5px solid var(--border);border-radius:100px;
+  font-size:0.78rem;font-weight:500;color:var(--muted);background:white;
+  cursor:pointer;transition:all 0.2s;
+}
+.rev-filter.active{background:var(--navy);border-color:var(--navy);color:white;}
+.rev-filter:hover:not(.active){border-color:var(--navy-light);color:var(--navy);}
+
+.review-list{display:flex;flex-direction:column;gap:20px;}
+.review-item{
+  padding-bottom:20px;border-bottom:1px solid var(--border);
+}
+.review-item:last-child{border-bottom:none;padding-bottom:0;}
+.review-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:10px;gap:12px;flex-wrap:wrap;
+}
+.reviewer{display:flex;align-items:center;gap:12px;}
+.rev-avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:1rem;
+  color:white;flex-shrink:0;
+}
+.rev-name{font-size:0.88rem;font-weight:600;color:var(--navy);}
+.rev-meta{font-size:0.75rem;color:var(--muted);font-weight:300;margin-top:1px;}
+.verified{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:0.65rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--green);background:var(--green-soft);
+  padding:2px 7px;border-radius:100px;margin-left:4px;
+}
+.rev-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.rev-stars{color:#f59e0b;font-size:0.82rem;letter-spacing:1px;}
+.rev-date{font-size:0.72rem;color:var(--muted);}
+.rev-task-badge{
+  font-size:0.7rem;font-weight:600;
+  background:var(--sky);color:var(--navy-mid);
+  padding:2px 8px;border-radius:100px;
+}
+.review-text{
+  font-size:0.88rem;color:var(--ink);line-height:1.75;
+  font-weight:300;margin-bottom:12px;
+}
+.review-helpful{
+  display:flex;align-items:center;gap:12px;font-size:0.78rem;color:var(--muted);
+}
+.helpful-btn{
+  display:flex;align-items:center;gap:5px;
+  background:none;border:1px solid var(--border);
+  padding:4px 10px;border-radius:100px;cursor:pointer;
+  font-size:0.75rem;font-family:'Outfit',sans-serif;color:var(--muted);
+  transition:all 0.2s;
+}
+.helpful-btn:hover{border-color:var(--navy);color:var(--navy);}
+
+.load-more-btn{
+  width:100%;margin-top:20px;padding:12px;
+  background:white;color:var(--navy);
+  border:1.5px solid var(--border);border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:0.88rem;font-weight:600;
+  cursor:pointer;transition:all 0.2s;
+}
+.load-more-btn:hover{border-color:var(--navy);background:var(--sky);}
+
+/* WRITE A REVIEW */
+.write-review{
+  background:var(--off);border:1px solid var(--border);
+  border-radius:14px;padding:24px;margin-top:20px;
+}
+.write-review h4{
+  font-family:'Instrument Serif',serif;font-size:1.1rem;
+  color:var(--navy);margin-bottom:6px;font-weight:400;
+}
+.write-review p{font-size:0.83rem;color:var(--muted);font-weight:300;margin-bottom:16px;}
+.star-picker{display:flex;gap:6px;margin-bottom:14px;}
+.star-pick{font-size:1.4rem;cursor:pointer;transition:transform 0.15s;color:#d1d5db;}
+.star-pick:hover,.star-pick.active{color:#f59e0b;transform:scale(1.2);}
+.review-textarea{
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--border);border-radius:9px;
+  font-size:0.88rem;font-family:'Outfit',sans-serif;color:var(--ink);
+  resize:vertical;min-height:90px;outline:none;transition:border-color 0.2s;
+  background:white;
+}
+.review-textarea:focus{border-color:var(--navy);}
+.review-textarea::placeholder{color:#9ca3af;}
+.submit-review-btn{
+  margin-top:10px;background:var(--navy);color:white;border:none;
+  padding:10px 24px;border-radius:8px;font-family:'Outfit',sans-serif;
+  font-size:0.88rem;font-weight:600;cursor:pointer;transition:background 0.2s;
+}
+.submit-review-btn:hover{background:var(--navy-mid);}
+
+/* ── RIGHT SIDEBAR ── */
+.sidebar{display:flex;flex-direction:column;gap:16px;}
+
+/* CTA CARD */
+.cta-card{
+  background:var(--navy);border-radius:16px;padding:28px;
+  position:sticky;top:80px;
+}
+.cta-tool-name{
+  font-family:'Instrument Serif',serif;font-size:1.3rem;
+  color:white;font-weight:400;margin-bottom:4px;
+}
+.cta-sub{font-size:0.82rem;color:rgba(255,255,255,0.4);margin-bottom:20px;font-weight:300;}
+.cta-price-row{
+  display:flex;align-items:baseline;gap:6px;margin-bottom:20px;
+  padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.cta-price{
+  font-family:'Instrument Serif',serif;font-size:2.2rem;
+  color:white;font-weight:400;
+}
+.cta-price-note{font-size:0.78rem;color:rgba(255,255,255,0.35);font-weight:300;}
+.cta-features{list-style:none;margin-bottom:20px;}
+.cta-features li{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.83rem;color:rgba(255,255,255,0.55);
+  font-weight:300;padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.cta-features li:last-child{border-bottom:none;}
+.cta-check{color:var(--gold);font-size:0.82rem;}
+.btn-try{
+  width:100%;padding:14px;border-radius:10px;
+  background:white;color:var(--navy);border:none;
+  font-family:'Outfit',sans-serif;font-size:0.95rem;font-weight:700;
+  cursor:pointer;transition:all 0.2s;margin-bottom:8px;
+}
+.btn-try:hover{background:var(--sky);}
+.btn-guide-cta{
+  width:100%;padding:12px;border-radius:10px;
+  background:transparent;color:rgba(255,255,255,0.6);
+  border:1px solid rgba(255,255,255,0.15);
+  font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:500;
+  cursor:pointer;transition:all 0.2s;
+}
+.btn-guide-cta:hover{border-color:rgba(255,255,255,0.4);color:white;}
+.cta-note{
+  text-align:center;margin-top:12px;
+  font-size:0.72rem;color:rgba(255,255,255,0.2);font-weight:300;
+}
+
+/* INFO CARD */
+.info-card{
+  background:white;border:1px solid var(--border);
+  border-radius:16px;padding:22px;
+}
+.info-card-title{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:14px;
+}
+.info-row{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:12px;padding:9px 0;border-bottom:1px solid var(--border);
+  font-size:0.85rem;
+}
+.info-row:last-child{border-bottom:none;}
+.info-key{color:var(--muted);font-weight:400;flex-shrink:0;}
+.info-val{color:var(--navy);font-weight:500;text-align:right;}
+.info-tag{
+  font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:100px;
+}
+
+/* SIMILAR TOOLS */
+.similar-card{
+  background:white;border:1px solid var(--border);
+  border-radius:16px;padding:22px;
+}
+.similar-card-title{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:14px;
+}
+.similar-tool{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:opacity 0.2s;text-decoration:none;
+}
+.similar-tool:last-child{border-bottom:none;}
+.similar-tool:hover{opacity:0.75;}
+.sim-logo{
+  width:38px;height:38px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:1rem;
+  border:1px solid rgba(0,0,0,0.06);flex-shrink:0;
+}
+.sim-name{font-size:0.87rem;font-weight:600;color:var(--navy);}
+.sim-rating{font-size:0.75rem;color:var(--muted);margin-top:1px;}
+.sim-price{
+  margin-left:auto;font-size:0.78rem;
+  color:var(--navy);font-weight:600;flex-shrink:0;
+}
+
+/* SHARE CARD */
+.share-card{
+  background:white;border:1px solid var(--border);
+  border-radius:16px;padding:20px;
+}
+.share-title{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:12px;
+}
+.share-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.share-btn{
+  flex:1;padding:9px 12px;border:1.5px solid var(--border);
+  border-radius:8px;font-size:0.78rem;font-weight:600;
+  color:var(--ink);background:white;cursor:pointer;
+  transition:all 0.2s;font-family:'Outfit',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  white-space:nowrap;
+}
+.share-btn:hover{border-color:var(--navy);color:var(--navy);}
+
+/* MOBILE */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-search-bar{display:none;}
+  .breadcrumb{padding:12px 20px;}
+  .page-wrap{grid-template-columns:1fr;padding:20px;gap:20px;}
+  .sidebar{order:-1;}
+  .cta-card{position:relative;top:0;}
+  .quick-stats{grid-template-columns:repeat(2,1fr);}
+  .stat:nth-child(2){border-right:none;}
+  .pros-cons-grid{grid-template-columns:1fr;}
+  .pros-side{border-right:none;border-bottom:1px solid var(--border);}
+  .tool-hero-header{flex-direction:column;align-items:flex-start;}
+}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">AI Simplified<sup>Beta</sup></a>
+  <div class="nav-search-bar">
+    <input type="text" placeholder="Search for an AI tool or task..." value="write better emails"/>
+    <button class="nav-search-btn">Search</button>
+  </div>
+  <div class="nav-right">
+    <a href="community.html" class="nav-link">Community</a>
+    <a href="pricing.html" class="nav-link">Pricing</a>
+    <a href="signup.html" class="nav-cta">Get Access</a>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">Home</a>
+  <span>/</span>
+  <a href="search-results.html">Email AI</a>
+  <span>/</span>
+  <strong>Gemini for Gmail</strong>
+</div>
+
+<!-- PAGE -->
+<div class="page-wrap">
+
+  <!-- LEFT COLUMN -->
+  <div class="left-col">
+
+    <!-- TOOL HERO -->
+    <div class="tool-hero reveal">
+      <div class="tool-hero-top">
+        <div class="tool-hero-header">
+          <div class="big-logo" style="background:#dbeafe;color:#1e40af;">G</div>
+          <div class="hero-title-block">
+            <div class="hero-tags">
+              <span class="tool-tag tag-top">⭐ Top Pick</span>
+              <span class="tool-tag tag-freemium">Freemium</span>
+              <span class="tool-tag tag-verified">✓ Verified</span>
+            </div>
+            <div class="tool-title">Gemini for Gmail</div>
+            <div class="tool-made-by">Made by <strong>Google</strong> · Email AI · Last updated March 2026</div>
+          </div>
+        </div>
+        <div class="hero-rating-row">
+          <div>
+            <div class="big-stars">★★★★★</div>
+            <div class="big-score">4.8</div>
+            <div class="total-reviews">1,243 community reviews</div>
+          </div>
+          <div class="rating-breakdown">
+            <div class="rating-bar-row">
+              <span class="bar-label">5★</span>
+              <div class="bar-track"><div class="bar-fill" style="width:78%"></div></div>
+              <span class="bar-count">968</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">4★</span>
+              <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
+              <span class="bar-count">174</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">3★</span>
+              <div class="bar-track"><div class="bar-fill" style="width:5%"></div></div>
+              <span class="bar-count">62</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">2★</span>
+              <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
+              <span class="bar-count">25</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">1★</span>
+              <div class="bar-track"><div class="bar-fill" style="width:1%"></div></div>
+              <span class="bar-count">14</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quick-stats">
+        <div class="stat">
+          <div class="stat-val">Free</div>
+          <div class="stat-label">Starting Price</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">5 min</div>
+          <div class="stat-label">Setup Time</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">😊</div>
+          <div class="stat-label">Beginner Friendly</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">Web + App</div>
+          <div class="stat-label">Platform</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="video-section reveal">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow">Setup Guide</div>
+          <div class="section-title">Watch before you start</div>
+        </div>
+      </div>
+      <div class="video-tabs">
+        <button class="vtab active">▶ Overview (3 min)</button>
+        <button class="vtab">🔧 Full Setup (8 min)</button>
+        <button class="vtab">💡 Tips & Tricks (5 min)</button>
+      </div>
+      <div class="video-player" onclick="this.innerHTML='<iframe width=\'100%\' height=\'100%\' src=\'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1\' frameborder=\'0\' allowfullscreen style=\'position:absolute;inset:0;\'></iframe>';this.style.cursor='default';">
+        <div class="video-bg"></div>
+        <div class="video-grid"></div>
+        <div class="play-btn">▶</div>
+        <div class="video-caption">
+          <h4>Gemini for Gmail — Quick Overview</h4>
+          <span>3 minutes · Updated March 2026 · 12,400 views</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETUP GUIDE -->
+    <div class="setup-guide reveal">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow">Step-by-Step</div>
+          <div class="section-title">How to get started</div>
+        </div>
+        <span style="font-size:0.78rem;color:var(--muted);">~5 minutes total</span>
+      </div>
+      <div class="guide-body">
+        <p class="guide-intro">You don't need to install anything new — Gemini is already built into Gmail. You just need to know where to find it and how to turn it on. Follow these steps and you'll be writing AI-assisted emails in under 5 minutes.</p>
+
+        <div class="guide-steps">
+          <div class="guide-step completed" onclick="toggleStep(this)">
+            <div class="step-num-circle">✓</div>
+            <div class="step-content">
+              <div class="step-title">Open Gmail in your browser</div>
+              <div class="step-desc">Go to gmail.com and sign in with your Google account. Gemini works in the browser version — not just the mobile app.</div>
+            </div>
+            <span class="step-time">30 sec</span>
+          </div>
+          <div class="guide-step" onclick="toggleStep(this)">
+            <div class="step-num-circle">2</div>
+            <div class="step-content">
+              <div class="step-title">Click "Compose" to write a new email</div>
+              <div class="step-desc">Hit the blue Compose button in the top left. A new email window will open at the bottom right of your screen.</div>
+            </div>
+            <span class="step-time">10 sec</span>
+          </div>
+          <div class="guide-step" onclick="toggleStep(this)">
+            <div class="step-num-circle">3</div>
+            <div class="step-content">
+              <div class="step-title">Find the Gemini pencil icon</div>
+              <div class="step-desc">Look at the bottom of the compose window. You'll see a small pencil icon with a star — that's Gemini. Click it to open the AI writing panel.</div>
+            </div>
+            <span class="step-time">30 sec</span>
+          </div>
+          <div class="guide-step" onclick="toggleStep(this)">
+            <div class="step-num-circle">4</div>
+            <div class="step-content">
+              <div class="step-title">Describe what you want to write</div>
+              <div class="step-desc">Type a short description of your email in plain language. Example: "Write a friendly follow-up email to a client I met last week at a conference." Gemini will draft the full email for you.</div>
+            </div>
+            <span class="step-time">1 min</span>
+          </div>
+          <div class="guide-step" onclick="toggleStep(this)">
+            <div class="step-num-circle">5</div>
+            <div class="step-content">
+              <div class="step-title">Review, edit, and send</div>
+              <div class="step-desc">Gemini inserts the draft into your compose window. Read it over, make any tweaks you want, then send. You can also click "Refine" to ask Gemini to adjust the tone or length.</div>
+            </div>
+            <span class="step-time">2 min</span>
+          </div>
+        </div>
+
+        <div class="guide-tip">
+          <span class="tip-icon">💡</span>
+          <div class="tip-text"><strong>Pro tip:</strong> The more detail you give Gemini, the better the result. Instead of "write a follow-up email," try "write a friendly but professional follow-up to Sarah at Acme Co. about our proposal from last Thursday." Specific prompts get specific, usable emails.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING TABLE -->
+    <div class="pricing-section reveal">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow">Pricing</div>
+          <div class="section-title">What does it actually cost?</div>
+        </div>
+      </div>
+      <div class="pricing-body">
+        <p class="pricing-intro">Gemini for Gmail is free to use with any Google account — no credit card required. The paid Google One AI Premium plan unlocks more advanced features, but most people won't need it to get real value.</p>
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>Plan</th>
+              <th>Price</th>
+              <th>Emails/day</th>
+              <th>Advanced AI</th>
+              <th>Summarize</th>
+              <th>Mobile</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="plan-name-cell">Free (Google Account) <span class="free-badge">Recommended to start</span></td>
+              <td class="price-cell">$0</td>
+              <td>Unlimited</td>
+              <td class="cross-cell">✗</td>
+              <td class="check-cell">✓</td>
+              <td class="check-cell">✓</td>
+            </tr>
+            <tr>
+              <td class="plan-name-cell">Google One AI Premium</td>
+              <td class="price-cell">$19.99/mo</td>
+              <td>Unlimited</td>
+              <td class="check-cell">✓</td>
+              <td class="check-cell">✓</td>
+              <td class="check-cell">✓</td>
+            </tr>
+            <tr>
+              <td class="plan-name-cell">Google Workspace Business</td>
+              <td class="price-cell">$14+/mo</td>
+              <td>Unlimited</td>
+              <td class="check-cell">✓</td>
+              <td class="check-cell">✓</td>
+              <td class="check-cell">✓</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="verdict-box">
+          <span class="verdict-icon">🎯</span>
+          <div class="verdict-text"><strong>Our verdict:</strong> Start with the free plan. For 90% of users — including small business owners, freelancers, and everyday professionals — the free tier does everything you need. Only upgrade if you want Gemini's deeper AI features or are using it for a full business team.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROS & CONS -->
+    <div class="pros-cons reveal">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow">Community Consensus</div>
+          <div class="section-title">Honest pros & cons</div>
+        </div>
+      </div>
+      <div class="pros-cons-grid">
+        <div class="pros-side">
+          <div class="pc-head pros-head">👍 What people love</div>
+          <ul class="pc-list">
+            <li><span class="pro-dot">✓</span>Zero setup — works inside Gmail immediately with no new accounts</li>
+            <li><span class="pro-dot">✓</span>Free tier is genuinely useful, not a bait-and-switch</li>
+            <li><span class="pro-dot">✓</span>Drafts feel natural, not robotic — easy to personalize</li>
+            <li><span class="pro-dot">✓</span>Great at summarizing long email threads into bullet points</li>
+            <li><span class="pro-dot">✓</span>Works perfectly on mobile app — not just desktop</li>
+          </ul>
+        </div>
+        <div class="cons-side">
+          <div class="pc-head cons-head">👎 What to watch out for</div>
+          <ul class="pc-list">
+            <li><span class="con-dot">✗</span>Only works if you use Gmail — useless for Outlook or other email clients</li>
+            <li><span class="con-dot">✗</span>Can produce generic-sounding drafts if your prompt is too vague</li>
+            <li><span class="con-dot">✗</span>Advanced features require a $19.99/month subscription</li>
+            <li><span class="con-dot">✗</span>Occasional inconsistency in tone matching across longer emails</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMUNITY REVIEWS -->
+    <div class="reviews-section reveal">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow">1,243 Reviews</div>
+          <div class="section-title">What the community says</div>
+        </div>
+        <button style="font-size:0.82rem;font-weight:600;color:var(--navy);background:var(--sky);border:1px solid rgba(26,53,96,0.15);padding:7px 14px;border-radius:8px;cursor:pointer;" onclick="document.querySelector('.write-review').scrollIntoView({behavior:'smooth'})">+ Write a Review</button>
+      </div>
+      <div class="reviews-body">
+        <div class="review-summary-bar">
+          <div>
+            <div class="review-big-num">4.8</div>
+            <div class="review-big-stars">★★★★★</div>
+            <div class="review-big-label">1,243 verified reviews</div>
+          </div>
+          <div class="bars-block">
+            <div class="bar-row"><span class="bar-stars-label">5 ★</span><div class="bar-outer"><div class="bar-inner" style="width:78%"></div></div><span class="bar-pct">78%</span></div>
+            <div class="bar-row"><span class="bar-stars-label">4 ★</span><div class="bar-outer"><div class="bar-inner" style="width:14%"></div></div><span class="bar-pct">14%</span></div>
+            <div class="bar-row"><span class="bar-stars-label">3 ★</span><div class="bar-outer"><div class="bar-inner" style="width:5%"></div></div><span class="bar-pct">5%</span></div>
+            <div class="bar-row"><span class="bar-stars-label">2 ★</span><div class="bar-outer"><div class="bar-inner" style="width:2%"></div></div><span class="bar-pct">2%</span></div>
+            <div class="bar-row"><span class="bar-stars-label">1 ★</span><div class="bar-outer"><div class="bar-inner" style="width:1%"></div></div><span class="bar-pct">1%</span></div>
+          </div>
+        </div>
+
+        <div class="review-filters">
+          <button class="rev-filter active">All Reviews</button>
+          <button class="rev-filter">5 Stars</button>
+          <button class="rev-filter">4 Stars</button>
+          <button class="rev-filter">Critical</button>
+          <button class="rev-filter">Small Business</button>
+          <button class="rev-filter">Beginners</button>
+        </div>
+
+        <div class="review-list">
+          <div class="review-item">
+            <div class="review-top">
+              <div class="reviewer">
+                <div class="rev-avatar" style="background:#1a3560;">M</div>
+                <div>
+                  <div class="rev-name">Maria T. <span class="verified">✓ Verified</span></div>
+                  <div class="rev-meta">Bakery owner · 14 reviews written</div>
+                </div>
+              </div>
+              <div class="rev-right">
+                <div class="rev-stars">★★★★★</div>
+                <div class="rev-date">March 2, 2026</div>
+                <div class="rev-task-badge">Used for: Customer emails</div>
+              </div>
+            </div>
+            <p class="review-text">"I've been avoiding AI tools because I assumed they'd be complicated. This one genuinely surprised me — I had it writing professional emails on my first try. The setup video on this site walked me through everything in 3 minutes. I now save probably 45 minutes a day on email alone."</p>
+            <div class="review-helpful">
+              <span>Was this helpful?</span>
+              <button class="helpful-btn" onclick="this.textContent='👍 '+( parseInt(this.textContent.replace(/\D/g,''))+1)+' Helpful'">👍 142 Helpful</button>
+              <button class="helpful-btn">👎 Not helpful</button>
+            </div>
+          </div>
+
+          <div class="review-item">
+            <div class="review-top">
+              <div class="reviewer">
+                <div class="rev-avatar" style="background:#166534;">R</div>
+                <div>
+                  <div class="rev-name">Raymond K. <span class="verified">✓ Verified</span></div>
+                  <div class="rev-meta">Freelance writer · 31 reviews</div>
+                </div>
+              </div>
+              <div class="rev-right">
+                <div class="rev-stars">★★★★★</div>
+                <div class="rev-date">Feb 18, 2026</div>
+                <div class="rev-task-badge">Used for: Client outreach</div>
+              </div>
+            </div>
+            <p class="review-text">"The free tier is more than enough for most people. I tried the paid upgrade for a month and honestly didn't notice enough difference to justify $20. Went back to free and haven't looked back. The summarize feature alone makes this worth using — I get long client threads condensed in seconds."</p>
+            <div class="review-helpful">
+              <span>Was this helpful?</span>
+              <button class="helpful-btn" onclick="this.textContent='👍 '+( parseInt(this.textContent.replace(/\D/g,''))+1)+' Helpful'">👍 98 Helpful</button>
+              <button class="helpful-btn">👎 Not helpful</button>
+            </div>
+          </div>
+
+          <div class="review-item">
+            <div class="review-top">
+              <div class="reviewer">
+                <div class="rev-avatar" style="background:#5b21b6;">D</div>
+                <div>
+                  <div class="rev-name">Denise W. <span class="verified">✓ Verified</span></div>
+                  <div class="rev-meta">Retired teacher · 8 reviews</div>
+                </div>
+              </div>
+              <div class="rev-right">
+                <div class="rev-stars">★★★★☆</div>
+                <div class="rev-date">Jan 30, 2026</div>
+                <div class="rev-task-badge">Used for: Personal emails</div>
+              </div>
+            </div>
+            <p class="review-text">"Four stars because the drafts can be a little stiff if you're not specific enough with your instructions. Once I learned to add more context it got much better. The setup guide here made everything clear — I'm not a tech person but I had no trouble getting started."</p>
+            <div class="review-helpful">
+              <span>Was this helpful?</span>
+              <button class="helpful-btn" onclick="this.textContent='👍 '+( parseInt(this.textContent.replace(/\D/g,''))+1)+' Helpful'">👍 74 Helpful</button>
+              <button class="helpful-btn">👎 Not helpful</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="load-more-btn">Load 10 more reviews</button>
+
+        <!-- WRITE A REVIEW -->
+        <div class="write-review">
+          <h4>Share your experience</h4>
+          <p>Have you used Gemini for Gmail? Your honest review helps other members make better decisions.</p>
+          <div class="star-picker" id="starPicker">
+            <span class="star-pick" onclick="setRating(1)">★</span>
+            <span class="star-pick" onclick="setRating(2)">★</span>
+            <span class="star-pick" onclick="setRating(3)">★</span>
+            <span class="star-pick" onclick="setRating(4)">★</span>
+            <span class="star-pick" onclick="setRating(5)">★</span>
+          </div>
+          <textarea class="review-textarea" placeholder="What did you use it for? What worked well? What didn't? The more specific you are, the more helpful your review will be for others..."></textarea>
+          <button class="submit-review-btn">Submit Review</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- CTA CARD -->
+    <div class="cta-card reveal">
+      <div class="cta-tool-name">Gemini for Gmail</div>
+      <div class="cta-sub">By Google · Free to start</div>
+      <div class="cta-price-row">
+        <div class="cta-price">Free</div>
+        <div class="cta-price-note">· $19.99/mo for Pro</div>
+      </div>
+      <ul class="cta-features">
+        <li><span class="cta-check">✓</span>Works inside Gmail instantly</li>
+        <li><span class="cta-check">✓</span>Draft, rewrite & summarize</li>
+        <li><span class="cta-check">✓</span>No extra account needed</li>
+        <li><span class="cta-check">✓</span>Mobile + Desktop</li>
+        <li><span class="cta-check">✓</span>Free tier is fully functional</li>
+      </ul>
+      <button class="btn-try" onclick="alert('Opens tool website in real version')">Try It Free →</button>
+      <button class="btn-guide-cta" onclick="document.querySelector('.setup-guide').scrollIntoView({behavior:'smooth'})">Read Setup Guide</button>
+      <div class="cta-note">Opens Google's website · AI Simplified is not affiliated</div>
+    </div>
+
+    <!-- TOOL INFO -->
+    <div class="info-card reveal">
+      <div class="info-card-title">Tool Info</div>
+      <div class="info-row">
+        <span class="info-key">Category</span>
+        <span class="info-val">Email AI</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Made by</span>
+        <span class="info-val">Google</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Pricing</span>
+        <span class="info-val"><span class="info-tag tag-freemium" style="background:var(--sky);color:var(--navy-mid);font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:100px;">Freemium</span></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Free plan</span>
+        <span class="info-val" style="color:var(--green);">✓ Yes</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Platform</span>
+        <span class="info-val">Web, iOS, Android</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Setup time</span>
+        <span class="info-val">~5 minutes</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Difficulty</span>
+        <span class="info-val">😊 Beginner</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Added to guide</span>
+        <span class="info-val">Jan 2024</span>
+      </div>
+    </div>
+
+    <!-- SIMILAR TOOLS -->
+    <div class="similar-card reveal">
+      <div class="similar-card-title">Similar Tools</div>
+      <a href="tool-detail.html" class="similar-tool">
+        <div class="sim-logo" style="background:#ede9fe;color:#5b21b6;">C</div>
+        <div>
+          <div class="sim-name">Claude</div>
+          <div class="sim-rating">★★★★★ 4.7 · Writing AI</div>
+        </div>
+        <div class="sim-price">Free</div>
+      </a>
+      <a href="tool-detail.html" class="similar-tool">
+        <div class="sim-logo" style="background:#dcfce7;color:#166534;">L</div>
+        <div>
+          <div class="sim-name">Lavender</div>
+          <div class="sim-rating">★★★★☆ 4.4 · Email AI</div>
+        </div>
+        <div class="sim-price">$29/mo</div>
+      </a>
+      <a href="tool-detail.html" class="similar-tool">
+        <div class="sim-logo" style="background:#fef3c7;color:#92681c;">G</div>
+        <div>
+          <div class="sim-name">ChatGPT</div>
+          <div class="sim-rating">★★★★☆ 4.5 · Writing AI</div>
+        </div>
+        <div class="sim-price">Free</div>
+      </a>
+      <a href="tool-detail.html" class="similar-tool">
+        <div class="sim-logo" style="background:#fee2e2;color:#dc2626;">S</div>
+        <div>
+          <div class="sim-name">Superhuman AI</div>
+          <div class="sim-rating">★★★★☆ 4.3 · Email AI</div>
+        </div>
+        <div class="sim-price">$30/mo</div>
+      </a>
+    </div>
+
+    <!-- SHARE -->
+    <div class="share-card reveal">
+      <div class="share-title">Share this tool</div>
+      <div class="share-btns">
+        <button class="share-btn">🔗 Copy Link</button>
+        <button class="share-btn">✉️ Email</button>
+        <button class="share-btn">𝕏 Post</button>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<script>
+function toggleStep(el){
+  el.classList.toggle('completed');
+  const circle = el.querySelector('.step-num-circle');
+  if(el.classList.contains('completed')){
+    circle.textContent = '✓';
+  } else {
+    circle.textContent = el.parentElement.querySelectorAll('.guide-step').length > 0
+      ? [...el.parentElement.children].indexOf(el) + 1
+      : circle.textContent;
+  }
+}
+
+// Re-number steps
+document.querySelectorAll('.guide-step').forEach((step,i)=>{
+  const circle = step.querySelector('.step-num-circle');
+  if(!step.classList.contains('completed')) circle.textContent = i+1;
+});
+
+function setRating(n){
+  document.querySelectorAll('.star-pick').forEach((s,i)=>{
+    s.classList.toggle('active', i < n);
+  });
+}
+
+document.querySelectorAll('.rev-filter').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.rev-filter').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+document.querySelectorAll('.vtab').forEach(tab=>{
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.vtab').forEach(t=>t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+document.querySelector('.load-more-btn').addEventListener('click',function(){
+  this.textContent='Loading...';
+  setTimeout(()=>this.textContent='No more reviews to load',1000);
+});
+
+document.querySelectorAll('.share-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    const orig = this.textContent;
+    this.textContent = '✓ Done!';
+    setTimeout(()=>this.textContent=orig, 1500);
+  });
+});
+
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('in'),(i%3)*80);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:0.05});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
